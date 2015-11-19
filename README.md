@@ -5,6 +5,11 @@ A simple and brief utility tools framework
 
 [![Build Status](https://travis-ci.org/by46/simplekit.svg)](https://travis-ci.org/by46/simplekit)
 [![Coverage Status](https://coveralls.io/repos/by46/simplekit/badge.svg?branch=master&service=github)](https://coveralls.io/github/by46/simplekit?branch=master)
+[![Supported Python versions](https://pypip.in/py_versions/simplekit/badge.svg)](https://pypi.python.org/pypi/simplekit/)
+[![Development Status](https://pypip.in/status/simplekit/badge.svg)](https://pypi.python.org/pypi/simplekit/)
+[![Latest Version](https://pypip.in/version/simplekit/badge.svg)](https://pypi.python.org/pypi/simplekit/)
+[![License](https://pypip.in/license/simplekit/badge.svg)](https://pypi.python.org/pypi/simplekit/)
+
 
 Dolphin
 ======
