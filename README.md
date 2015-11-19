@@ -10,15 +10,15 @@ A simple and brief utility tools framework
 [![License](https://img.shields.io/pypi/l/simplekit.svg)](https://pypi.python.org/pypi/simplekit/)
 
 
-Dolphin
+Objson
 ======
 
-Dolphin is sample json serialize and deserialize tool for Python.
+Objson is sample json serialize and deserialize tool for Python.
 
 Example:
 ```python
     import sys
-    import dolphin
+    import Objson
     
     text = r'{"Name":"benjamin", "age":27}'
     
