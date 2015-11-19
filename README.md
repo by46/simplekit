@@ -90,3 +90,5 @@ class JsonObject(object):
     name = property(_item_getter('name'), _item_setter('name'))
     age = property(_item_getter('age'), _item_setter('age'))
  ```
+
+
