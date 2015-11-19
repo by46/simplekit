@@ -3,12 +3,13 @@ simplekit
 
 A simple and brief utility tools framework
 
+[![Build Status](https://travis-ci.org/by46/simplekit.svg)](https://travis-ci.org/by46/simplekit)
+
 Dolphin
 ======
 
 Dolphin is sample json serialize and deserialize tool for Python.
 
-[![Build Status](https://travis-ci.org/by46/dolphin.svg)](https://travis-ci.org/by46/dolphin)
 [![Coverage Status](https://coveralls.io/repos/by46/dolphin/badge.svg?branch=master&service=github)](https://coveralls.io/github/by46/dolphin?branch=master)
 
 Example:
