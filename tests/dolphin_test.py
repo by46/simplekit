@@ -8,7 +8,7 @@ except ImportError:
 import unittest
 import json
 
-import dolphin
+from simplekit import dolphin
 
 
 class DolphinTestCase(unittest.TestCase):

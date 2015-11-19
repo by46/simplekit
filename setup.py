@@ -18,13 +18,13 @@ if sys.argv[-1] == 'publish':
     sys.exit()
 
 packages = [
-    'dolphin'
+    'simplekit'
 ]
 
 requires = []
 
 version = ''
-with open('dolphin/__init__.py', 'r') as fd:
+with open('simplekit/__init__.py', 'r') as fd:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
                         fd.read(), re.MULTILINE).group(1)
 
@@ -32,16 +32,16 @@ if not version:
     raise RuntimeError('Cannot find version information')
 
 setup(
-    name='dolphin',
+    name='simplekit',
     version=version,
-    description='A simple JSON serialize and deserialize tools',
-    long_description="A simple JSON serialize and deserialize tools",
+    description='A simple and brief utility tools framework',
+    long_description="A simple and brief utility tools framework",
     author='Benjamin Yan',
     author_email='ycs_ctbu_2010@126.com',
-    url='https://github.com/by46/dolphin',
+    url='https://github.com/by46/simplekit',
     packages=packages,
     package_data={'': ['LICENSE', 'NOTICE']},
-    package_dir={'dolphin': 'dolphin'},
+    package_dir={'simplekit': 'simplekit'},
     include_package_data=True,
     install_requires=requires,
     license='The MIT License',
