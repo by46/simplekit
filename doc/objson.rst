@@ -9,7 +9,7 @@ some simple and brief way which operate the object object.
 Loads json
 -------------
 
-Objson provides the same interface with ``json`` package, the example code
+Objson provides the same interface with ``json`` package, the example code:
 
 .. code-block:: python
 
@@ -33,7 +33,7 @@ Dumps json
 -------------
 
 The ``dumps`` function is the some as ``json``, just can support dumps the object
-which deserialized by ``objson.loads(s)``. the example code
+which deserialized by ``objson.loads(s)``. the example code:
 
 .. code-block:: python
 
@@ -54,6 +54,7 @@ lambda, not, or, pass, print, raise, return, try, while, with,
 yield, the dolphin libs will escape the property, add prefix string "m".
 
 For instance
+
 .. code-block:: python
 
     text = r'{"class": 21}

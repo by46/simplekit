@@ -19,45 +19,6 @@ simplekit is a simple and brief utility tools framework, include:
 
 1. Objson - a json serialize and deserialize tool.
 
-Objson
---------
-
-Objson is sample json serialize and deserialize tool for Python.
-
-Example:
-```python
-    import sys
-    import Objson
-    
-    text = r'{"Name":"benjamin", "age":27}'
-    
-    obj = dolphin.loads(text)
-    if obj is None:
-        print 'some error occur'
-        sys.exit(-1)
-       
-    assert obj.Name == "benjamin"
-    assert obj['Name'] == "benjamin"
-    assert obj.age == 27
-    assert obj["age"] == 27
-```
-    
-Notice:
---------
-if The JSON property name is one of the below:
- 'and', 'as', 'assert', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 
- 'except', 'exec', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 
- 'lambda', 'not', 'or', 'pass', 'print', 'raise', 'return', 'try', 'while', 'with', 
- 'yield'. The dolphin libs will escape the property, add prefix string "m". 
- 
- For instance:
- ```python
-    text = r'{"class": 21}
-    obj = dolphin.loads(text)
-    
-    assert obj.mclass==21
-    assert obj['class'] == 21
- ```
  
  Dynamic class template
  ----------------------------
