@@ -9,7 +9,8 @@ some simple and brief way which operate the object object.
 Loads json
 -------------
 
-Objson provides the same interface with ``json`` package, the example code:
+Objson provides the same interface with ``json`` package, the example code
+
 .. code-block:: python
 
     from simplekit import objson
@@ -32,7 +33,8 @@ Dumps json
 -------------
 
 The ``dumps`` function is the some as ``json``, just can support dumps the object
-which deserialized by ``objson.loads(s)``. the example code:
+which deserialized by ``objson.loads(s)``. the example code
+
 .. code-block:: python
 
     from simplekit import objson
