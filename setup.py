@@ -18,7 +18,8 @@ if sys.argv[-1] == 'publish':
     sys.exit()
 
 packages = [
-    'simplekit'
+    'simplekit',
+    'simplekit.objson'
 ]
 
 requires = []

@@ -6,6 +6,7 @@ History
 1. use `type` factory instead of just compile code
 2. add new unittest
 3. fix dump bug
+4. rename project name to simplekit
 
 0.0.2
 ------

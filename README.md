@@ -14,6 +14,10 @@ Documents
 -----------
 Document is available at [http://simplekit.readthedocs.org/en/latest/](http://simplekit.readthedocs.org/en/latest/)
 
+simplekit is a simple and brief utility tools framework, include:
+
+1. Objson - a json serialize and deserialize tool.
+
 Objson
 --------
 
