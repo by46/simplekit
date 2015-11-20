@@ -21,10 +21,6 @@ def __dynamic__init__(self, kv):
     self._data.update(kv)
 
 
-def __dynamic__getitem__(self, key):
-    return self._data.get(key)
-
-
 def __dynamic__setitem__(self, key, value):
     self._data[key] = value
 
@@ -36,7 +32,9 @@ def make_dynamic_class(typename, field_names):
 
     safe_fields_names = map(lambda x: 'm' + x if _iskeyword(x) else x, field_names)
 
-    attr = dict()
+    make_property = lambda x: property(_item_getter(x), _item_setter(x))
+
+    attr = dict((safe_name, make_property(name)) for name, safe_name in zip(field_names, safe_fields_names))
     attr['__doc__'] = typename
     attr['__identifier__'] = "dolphin"
     attr['__slots__'] = tuple(safe_fields_names)
@@ -48,9 +46,6 @@ def make_dynamic_class(typename, field_names):
     attr['__repr__'] = lambda self: "{%s}" % (', '.join([
         "%s=%r" % (key, self[key]) for key in sorted(self._data.keys())
     ]))
-
-    for name, safe_name in zip(field_names, safe_fields_names):
-        attr[safe_name] = property(_item_getter('%s' % name), _item_setter('%s' % name))
 
     return type(typename, (object,), attr)
 
