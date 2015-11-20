@@ -8,6 +8,7 @@ A simple and brief utility tools framework
 [![Supported Python versions](https://img.shields.io/pypi/pyversions/simplekit.svg)](https://pypi.python.org/pypi/simplekit/)
 [![Latest Version](	https://img.shields.io/pypi/v/simplekit.svg)](https://pypi.python.org/pypi/simplekit/)
 [![License](https://img.shields.io/pypi/l/simplekit.svg)](https://pypi.python.org/pypi/simplekit/)
+[![Documentation Status](https://readthedocs.org/projects/simplekit/badge/?version=latest)](http://simplekit.readthedocs.org/en/latest/?badge=latest)
 
 
 Documents

@@ -22,6 +22,7 @@ This part of document is introduce what's is SimpleKit and who to use it.
    :maxdepth: 2
 
    install.rst
+   objson.rst
 
 Indices and tables
 ==================

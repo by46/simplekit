@@ -43,3 +43,19 @@ which deserialized by ``objson.loads(s)``. the example code:
 
     assert text == text2
 
+Notice
+--------
+if The JSON property name is one of the below:
+and, as, assert, break, class, continue, def, del, elif, else,
+except, exec, finally, for, from, global, if, import, in, is,
+lambda, not, or, pass, print, raise, return, try, while, with,
+yield, the dolphin libs will escape the property, add prefix string "m".
+
+For instance
+.. code-block:: python
+
+    text = r'{"class": 21}
+    obj = dolphin.loads(text)
+
+    assert obj.mclass==21
+    assert obj['class'] == 21
