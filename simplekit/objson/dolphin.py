@@ -41,6 +41,20 @@ def _unique(obj):
 
 
 def dumps(obj, *args, **kwargs):
+    """Serialize a object to string
+
+    Basic Usage:
+
+    >>> import simplekit.objson
+    >>> obj = {'name':'wendy'}
+    >>> print simplekit.objson.dumps(obj)
+
+
+    :param obj: a object which need to dump
+    :param args: Optional arguments that :func:`json.dumps` takes.
+    :param kwargs: Keys arguments that :py:func:`json.dumps` takes.
+    :return: string
+    """
     if hasattr(obj, "__identifier__") and obj.__identifier__ == "dolphin":
         kwargs['default'] = object2dict
 
@@ -48,6 +62,23 @@ def dumps(obj, *args, **kwargs):
 
 
 def dump(obj, fp, *args, **kwargs):
+    """Serialize a object to a file object.
+
+    Basic Usage:
+
+    >>> import simplekit.objson
+    >>> from cStringIO import StringIO
+    >>> obj = {'name': 'wendy'}
+    >>> io = StringIO()
+    >>> simplekit.objson.dump(obj, io)
+    >>> print io.getvalue()
+
+    :param obj: a object which need to dump
+    :param fp: a instance of file object
+    :param args: Optional arguments that :func:`json.dump` takes.
+    :param kwargs: Keys arguments that :func:`json.dump` takes.
+    :return: None
+    """
     if hasattr(obj, "__identifier__") and obj.__identifier__ == "dolphin":
         kwargs['default'] = object2dict
 
