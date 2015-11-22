@@ -1,7 +1,7 @@
 Objson
 ======
 
-The package ``json`` is used to serialize and deserialize json object. The ``json.loads(s)``
+The package :mod:`json` is used to serialize and deserialize json object. The :func:`json.loads`
 function return dict object which represent the json object, I think the ``[key]`` operator,
 especially the json object contains hierarchical project. So, SimpleKit provides
 some simple and brief way which operate the object object.
@@ -9,7 +9,7 @@ some simple and brief way which operate the object object.
 Loads json
 -------------
 
-Objson provides the same interface with ``json`` package, the example code:
+Objson provides the same interface with :mod:`json` package, the example code:
 
 .. code-block:: python
 
@@ -25,15 +25,15 @@ Objson provides the same interface with ``json`` package, the example code:
     assert obj.marriage
 
 
-Notice, ``objson.loads(s)`` return a object represent the json object. and you
+Notice,  :func:`objson.loads` return a object represent the json object. and you
 can access the json property by ``.`` operator, like: ``assert obj.age == 27``,
 and  the ``[key]`` operator is available.
 
 Dumps json
 -------------
 
-The ``dumps`` function is the some as ``json``, just can support dumps the object
-which deserialized by ``objson.loads(s)``. the example code:
+The ``dumps`` function is the some as :func:`json.dumps`, just can support dumps the object
+which deserialized by :func:`json.loads`.  the example code:
 
 .. code-block:: python
 
@@ -48,10 +48,13 @@ which deserialized by ``objson.loads(s)``. the example code:
 Notice
 --------
 if The JSON property name is one of the below:
+
 and, as, assert, break, class, continue, def, del, elif, else,
 except, exec, finally, for, from, global, if, import, in, is,
 lambda, not, or, pass, print, raise, return, try, while, with,
-yield, the dolphin libs will escape the property, add prefix string "m".
+yield
+
+the dolphin libs will escape the property, add prefix string "m".
 
 For instance
 

@@ -87,6 +87,23 @@ def dump(obj, fp, *args, **kwargs):
 
 def _load(fn):
     def tmp(src, *args, **kwargs):
+        """Deserialize json string to a object
+
+        Provide a brief way to represent a object,  Can use ``.`` operate access
+        Json object property
+
+        Basic Usage:
+
+        >>> from simplekit import objson
+        >>> text = r'{"Name":"wendy"}'
+        >>> obj = objson.loads(text)
+        >>> assert obj.Name == 'wendy'
+
+        :param src: string or file object
+        :param args: Optional arguments that :func:`json.load` takes.
+        :param kwargs: Keys arguments that :func:`json.loads` takes.
+        :return: :class:`object` or :class:`list`
+        """
         try:
             kwargs['object_hook'] = object_hook
             return fn(src, *args, **kwargs)
