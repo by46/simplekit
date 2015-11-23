@@ -1,6 +1,11 @@
 History
 ======
 
+0.0.4
+---------
+1. add documents
+2. fix some bug
+
 0.0.3
 ------
 1. use `type` factory instead of just compile code

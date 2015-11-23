@@ -5,8 +5,8 @@ try:
 except ImportError:
     from StringIO import StringIO
 
-import unittest
 import json
+import unittest
 
 from simplekit import objson
 
@@ -46,10 +46,14 @@ class DolphinTestCase(unittest.TestCase):
         self.assertTrue(obj['class'])
         self.assertTrue(obj['def'])
 
-        text = r'{"class":true, "mclass":false}'
+        text = r'{"class":true, "mclass":false, "from-cookie": true, "0file":true}'
         obj = objson.loads(text)
         self.assertFalse(obj.mclass)
         self.assertTrue(obj['class'])
+        self.assertTrue(obj.from_cookie)
+        self.assertTrue(obj['from-cookie'])
+        self.assertTrue(obj.m0file)
+        self.assertTrue(obj['0file'])
 
     def test_dumps(self):
         text = r'{"sort":true, "name":{"first":"benjamin", "last": "yan"}}'

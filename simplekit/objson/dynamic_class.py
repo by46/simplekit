@@ -1,6 +1,9 @@
+import re
 from keyword import iskeyword as _iskeyword
 
 __author__ = 'benjamin.c.yan@newegg.com'
+
+_re_encode = re.compile('[^a-zA-z0-9_]', re.MULTILINE)
 
 
 def _item_setter(key):
@@ -27,6 +30,14 @@ def _dynamic__setitem(self, key, value):
 
 def _property(name):
     return property(_item_getter(name), _item_setter(name))
+
+
+def _encode_property_name(name):
+    if _iskeyword(name) or name[0].isdigit():
+        return 'm' + name
+    elif not all(c.isalnum() or c == '_' for c in name):
+        return _re_encode.sub('_', name)
+    return name
 
 
 def make_dynamic_class(typename, field_names):
@@ -77,7 +88,7 @@ def make_dynamic_class(typename, field_names):
         field_names = field_names.replace(",", " ").split()
     field_names = map(str, field_names)
 
-    safe_fields_names = map(lambda x: 'm' + x if _iskeyword(x) else x, field_names)
+    safe_fields_names = map(_encode_property_name, field_names)
 
     attr = dict((safe_name, _property(name)) for name, safe_name in zip(field_names, safe_fields_names))
     attr['__doc__'] = typename

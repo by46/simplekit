@@ -47,21 +47,32 @@ which deserialized by :func:`json.loads`.  the example code:
 
 Notice
 --------
-if The JSON property name is one of the below:
+If the JSON property name is one of the below:
 
 and, as, assert, break, class, continue, def, del, elif, else,
 except, exec, finally, for, from, global, if, import, in, is,
 lambda, not, or, pass, print, raise, return, try, while, with,
 yield
 
+Or
+
+the property name is start with digit,
+
 the dolphin libs will escape the property, add prefix string "m".
 
-For instance
+and also, property contains any other character which is not alpha, digit and ``_``(underscore)
+will replace to ``_``(underscore).
+
+For example:
 
 .. code-block:: python
 
-    text = r'{"class": 21}
+    text = r'{"class": true, "from-cookie": true, "0file":True}'
     obj = dolphin.loads(text)
 
-    assert obj.mclass==21
-    assert obj['class'] == 21
+    assert obj.mclass
+    assert obj['class']
+    assert obj.from_cookie
+    assert obj['from-cookie']
+    assert obj.m0file
+    assert obj['0file']
