@@ -93,6 +93,16 @@ class DolphinTestCase(unittest.TestCase):
         objson.dump(obj, fp)
         self.assertEqual(json.loads(text), json.loads(fp.getvalue()))
 
+    def test_dump_normal2(self):
+        text = r'[{"name":"benjamin", "age":21}]'
+        obj = objson.loads(text)
+        expected = objson.dumps(obj)
+        self.assertEqual(json.loads(text), json.loads(expected))
+
+        expected = objson.dumps([dict(name='benjamin', age=21)])
+        self.assertEqual(json.loads(text), json.loads(expected))
+
+
     def test_dump_change_value(self):
         text = r'{"name":"benjamin", "age":21}'
         obj = objson.loads(text)

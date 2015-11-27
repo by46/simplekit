@@ -55,8 +55,7 @@ def dumps(obj, *args, **kwargs):
     :param kwargs: Keys arguments that :py:func:`json.dumps` takes.
     :return: string
     """
-    if hasattr(obj, "__identifier__") and obj.__identifier__ == "dolphin":
-        kwargs['default'] = object2dict
+    kwargs['default'] = object2dict
 
     return json.dumps(obj, *args, **kwargs)
 
@@ -79,8 +78,7 @@ def dump(obj, fp, *args, **kwargs):
     :param kwargs: Keys arguments that :func:`json.dump` takes.
     :return: None
     """
-    if hasattr(obj, "__identifier__") and obj.__identifier__ == "dolphin":
-        kwargs['default'] = object2dict
+    kwargs['default'] = object2dict
 
     json.dump(obj, fp, *args, **kwargs)
 

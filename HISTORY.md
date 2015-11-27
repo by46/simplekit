@@ -12,6 +12,7 @@ History
 2. add new unittest
 3. fix dump bug
 4. rename project name to simplekit
+5. fix dump list object
 
 0.0.2
 ------
