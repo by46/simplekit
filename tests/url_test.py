@@ -20,3 +20,8 @@ class UrlTestCase(unittest.TestCase):
         for base, segments, expected in tests:
             actual = url.remove_path_segments(base, segments)
             self.assertListEqual(expected, actual)
+
+    def test_url(self):
+        raw = 'http://www.google.com.hk/search?title=benjamin&age=27#/target'
+        u = url.URL(raw)
+        self.assertEqual(raw, u.url)
