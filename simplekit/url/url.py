@@ -1,10 +1,9 @@
 import six
 from six.moves import urllib
 
+import util
 from .path import Path
 from .query import Query
-
-import util
 
 __author__ = 'benjamin.c.yan'
 
@@ -16,6 +15,7 @@ DEFAULT_PORTS = {
     'http': 80,
     'https': 443,
 }
+
 
 class URL(object):
     def __init__(self, url):
@@ -49,6 +49,10 @@ class URL(object):
     @property
     def netloc(self):
         return self._netloc
+
+    @netloc.setter
+    def netloc(self, value):
+        self._netloc = value
 
     @property
     def url(self):
