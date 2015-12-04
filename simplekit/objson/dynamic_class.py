@@ -21,6 +21,7 @@ def _item_getter(key):
 
 
 def _dynamic__init(self, kv):
+    self._data = dict()
     self._data.update(kv)
 
 
@@ -93,8 +94,8 @@ def make_dynamic_class(typename, field_names):
     attr = dict((safe_name, _property(name)) for name, safe_name in zip(field_names, safe_fields_names))
     attr['__doc__'] = typename
     attr['__identifier__'] = "dolphin"
-    attr['__slots__'] = tuple(safe_fields_names)
-    attr['_data'] = dict()
+    attr['__slots__'] = tuple(['_data'] + safe_fields_names)
+    # attr['_data'] = None
     attr['__init__'] = _dynamic__init
     attr['__getitem__'] = lambda self, key: self._data.get(key)
     attr['__setitem__'] = _dynamic__setitem
