@@ -95,7 +95,6 @@ def make_dynamic_class(typename, field_names):
     attr['__doc__'] = typename
     attr['__identifier__'] = "dolphin"
     attr['__slots__'] = tuple(['_data'] + safe_fields_names)
-    # attr['_data'] = None
     attr['__init__'] = _dynamic__init
     attr['__getitem__'] = lambda self, key: self._data.get(key)
     attr['__setitem__'] = _dynamic__setitem
