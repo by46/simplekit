@@ -1,13 +1,14 @@
 __author__ = 'benjamin.c.yan'
 
 import json
+import itertools
 
 from .dynamic_class import make_dynamic_class
 
 
 _knapsack = {}
 
-_random_seed = 0
+seed = itertools.count(1)
 
 
 def object2dict(obj):
@@ -18,7 +19,7 @@ def object2dict(obj):
 
 
 def object_hook(obj):
-    unique_id = _unique(obj)
+    unique_id = tuple((key, type(obj[key])) for key in sorted(obj.keys()))
     if unique_id in _knapsack:
         dynamic_class = _knapsack[unique_id]
     else:
@@ -30,14 +31,7 @@ def object_hook(obj):
 
 
 def _random_name():
-    global _random_seed
-    _random_seed += 1
-    return 'Dolphin_%d' % _random_seed
-
-
-def _unique(obj):
-    tmp = tuple([(key, type(obj[key])) for key in sorted(obj.keys())])
-    return hash(tmp)
+    return 'Dolphin_%d' % next(seed)
 
 
 def dumps(obj, *args, **kwargs):
