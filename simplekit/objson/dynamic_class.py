@@ -54,39 +54,37 @@ def make_dynamic_class(typename, field_names):
 
     Class prototype definition ::
 
-    ```python
+        class JsonObject(object):
+            __identifier__ = "dolphin"
 
-    class JsonObject(object):
-        __identifier__ = "dolphin"
+            def __init__(self, kv=None):
+                if kv is None:
+                    kv = dict()
+                self.__dict__.update(kv)
 
-        def __init__(self, kv=None):
-            if kv is None:
-                kv = dict()
-            self.__dict__.update(kv)
+            def __getitem__(self, key):
+                return self.__dict__.get(key)
 
-        def __getitem__(self, key):
-            return self.__dict__.get(key)
+            def __setitem__(self, key, value):
+                self.__dict__[key] = value
 
-        def __setitem__(self, key, value):
-            self.__dict__[key] = value
+            def __iter__(self):
+                return iter(self.__dict__)
 
-        def __iter__(self):
-            return iter(self.__dict__)
+            def __repr__(self):
+                keys = sorted(self.__dict__.keys())
+                text = ', '.join(["%s=%r" % (key, self[key]) for key in keys])
+                return '{%s}' % text
 
-        def __repr__(self):
-            keys = sorted(self.__dict__.keys())
-            text = ', '.join(["%s=%r" % (key, self[key]) for key in keys])
-            return '{%s}' % text
-
-        name=_property('name')
-    ```
+            name=_property('name')
 
     Basic Usage ::
-    >>> from objson import make_dynamic_class, dumps
-    >>> Entity = make_dynamic_class('Entity', 'name, sex, age')
-    >>> entity = Entity()
-    >>> entity.name, entity.sex, entity.age = 'benjamin', 'male', 21
-    >>> dumps(entity)
+
+        from objson import make_dynamic_class, dumps
+        Entity = make_dynamic_class('Entity', 'name, sex, age')
+        entity = Entity()
+        entity.name, entity.sex, entity.age = 'benjamin', 'male', 21
+        dumps(entity)
 
     :param typename: dynamic class's name
     :param field_names: a string :class:`list` and a field name string which separated by comma,
