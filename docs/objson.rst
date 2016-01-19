@@ -60,8 +60,8 @@ the property name is start with digit,
 
 the dolphin libs will escape the property, add prefix string "m".
 
-and also, property contains any other character which is not alpha, digit and ``_``(underscore)
-will replace to ``_``(underscore).
+and also, property contains any other character which is not alpha, digit and ``_`` (underscore)
+will replace to ``_`` (underscore).
 
 For example:
 

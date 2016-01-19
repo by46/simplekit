@@ -11,17 +11,28 @@ class StoppableThread(threading.Thread):
     def __init__(self, daemon=True, group=None, target=None, name=None, args=(), kwargs={}):
         super(StoppableThread, self).__init__(group, target, name, args, kwargs)
         self.daemon = daemon
-        self.__stop_event = threading.Event()
+        self._stopped_event = threading.Event()
 
-    def run(self):
-        while not self.__stop_event.is_set():
-            self.process()
-
-    def process(self):
-        raise NotImplementedError("please override it")
+    def start(self):
+        self.on_thread_start()
+        threading.Thread.start(self)
 
     def stop(self):
-        self.__stop_event.set()
+        self._stop_event.set()
+        self.on_thread_stop()
+
+    @property
+    def stopped_event(self):
+        return self._stopped_event
+
+    def should_keep_running(self):
+        return not self._stopped_event.is_set()
+
+    def on_thread_stop(self):
+        pass
+
+    def on_thread_start(self):
+        pass
 
 
 class LockMixin(object):
