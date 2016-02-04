@@ -71,6 +71,9 @@ class Dolphin(object):
         text = ', '.join('%s=%r' % (key, self[key]) for key in keys)
         return '{%s}' % text
 
+    def __eq__(self, other):
+        return str(self) == str(other)
+
 
 def dumps(obj, *args, **kwargs):
     """Serialize a object to string
