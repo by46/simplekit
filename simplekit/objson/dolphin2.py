@@ -22,10 +22,11 @@ def empty():
 
 class Dolphin(object):
     def __init__(self, other=None):
-        if isinstance(other, Dolphin):
-            other = other.__dict__
+        if other:
+            if isinstance(other, Dolphin):
+                other = other.__dict__
 
-        self.__dict__.update(other)
+            self.__dict__.update(other)
 
     def __iter__(self):
         return iter(self.__dict__)
