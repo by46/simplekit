@@ -16,8 +16,20 @@ def object_hook(obj):
     return Dolphin(obj)
 
 
-def empty():
-    return Dolphin()
+def empty(other=None):
+    """
+    new an empty object
+    basic usage ::
+    >>> from simplekit import objson
+    >>> obj = objson.empty()
+    >>> obj2 = objson.empty(dict(name='benjamin', sex='male'))
+    >>> assert obj2.name == 'benjamin'
+    >>> assert obj2.sex == 'male'
+
+    :param other: :class:``dict``, initialize properties
+    :return: an instance of :class:``Dolphin``
+    """
+    return Dolphin(other)
 
 
 class Dolphin(object):

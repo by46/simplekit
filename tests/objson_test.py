@@ -219,3 +219,9 @@ class Dolphin2TestCase(unittest.TestCase):
         self.assertEqual('wendy', obj[0])
         self.assertEqual('wendy', obj['0'])
         self.assertEqual('wendy', obj.m0)
+
+        obj2 = objson.empty(dict(name='benjamin', sex='male'))
+        obj2.age = 28
+        self.assertEqual(obj2.name, 'benjamin')
+        self.assertEqual(obj2.sex, 'male')
+        self.assertEqual(obj2.age, 28)
