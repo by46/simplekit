@@ -27,14 +27,17 @@ class Dolphin(object):
         return iter(self.__dict__)
 
     def __getitem__(self, key):
+        key = str(key)
         if not key.startswith('_'):
             return self.__dict__.get(key)
 
     def __setitem__(self, key, value):
+        key = str(key)
         if not key.startswith('_'):
             self.__dict__[key] = value
 
     def __getattr__(self, name):
+        name = str(name)
         if not name.startswith('_'):
             if name in self:
                 return self[name]
