@@ -1,5 +1,5 @@
-import json
 import functools
+import json
 import re
 from keyword import iskeyword
 
@@ -9,10 +9,7 @@ _re_encode = re.compile('[^a-zA-Z0-9]', re.MULTILINE)
 
 
 def object2dict(obj):
-    d = {}
-    for key in obj:
-        d[key] = obj[key]
-    return d
+    return obj.__dict__
 
 
 def object_hook(obj):
@@ -21,9 +18,10 @@ def object_hook(obj):
 
 class Dolphin(object):
     def __init__(self, other=None):
-        if isinstance(other, (dict, Dolphin)):
-            for key in other:
-                self[key] = other[key]
+        if isinstance(other, Dolphin):
+            other = other.__dict__
+
+        self.__dict__.update(other)
 
     def __iter__(self):
         return iter(self.__dict__)
@@ -97,7 +95,6 @@ def dump(obj, fp, *args, **kwargs):
     kwargs['default'] = object2dict
 
     json.dump(obj, fp, *args, **kwargs)
-
 
 
 def _load(fn):

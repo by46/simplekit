@@ -44,3 +44,7 @@ if __name__ == '__main__':
 
     other = dict(name='benjamin', sex='male', high=175)
     print Bear(other)
+
+    import json
+    import simplekit.objson
+    print simplekit.objson.dumps2(object())
