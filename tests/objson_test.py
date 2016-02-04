@@ -1,5 +1,3 @@
-__author__ = 'Administrator'
-
 try:
     from cStringIO import StringIO
 except ImportError:
@@ -9,6 +7,8 @@ import json
 import unittest
 
 from simplekit import objson
+
+__author__ = 'benjamin.c.yan'
 
 
 class DolphinTestCase(unittest.TestCase):
@@ -133,12 +133,12 @@ class Dolphin2TestCase(unittest.TestCase):
                  ('false', False),
                  ('[]', [])]
         for text, expected in tests:
-            actual = objson.loads2(text)
+            actual = objson.loads(text)
             self.assertEqual(expected, actual)
 
     def test_loads_normal(self):
         text = r'{"sort":true, "name":{"first":"benjamin", "last": "yan"}}'
-        obj = objson.loads2(text)
+        obj = objson.loads(text)
         self.assertIsNotNone(obj)
         self.assertTrue(obj.sort)
         self.assertEqual("benjamin", obj.name.first)
@@ -151,7 +151,7 @@ class Dolphin2TestCase(unittest.TestCase):
 
     def test_loads_exceptions2(self):
         text = r'{"class":true, "def":true, "case":true}'
-        obj = objson.loads2(text)
+        obj = objson.loads(text)
         self.assertTrue(obj.mclass)
         self.assertTrue(obj.mdef)
         self.assertTrue(obj.case)
@@ -160,7 +160,7 @@ class Dolphin2TestCase(unittest.TestCase):
         self.assertTrue(obj['def'])
 
         text = r'{"class":true, "mclass":false, "from-cookie": true, "0file":true}'
-        obj = objson.loads2(text)
+        obj = objson.loads(text)
         self.assertFalse(obj.mclass)
         self.assertTrue(obj['class'])
         self.assertTrue(obj.from_cookie)
@@ -170,27 +170,27 @@ class Dolphin2TestCase(unittest.TestCase):
 
     def test_dumps(self):
         text = r'{"sort":true, "name":{"first":"benjamin", "last": "yan"}}'
-        obj = objson.loads2(text)
+        obj = objson.loads(text)
         actual = objson.dumps(obj)
         self.assertDictEqual(json.loads(text), json.loads(actual))
 
     def test_load_normal(self):
         fp = StringIO(r'{"name":"benjamin", "age":21}')
-        obj = objson.load2(fp)
+        obj = objson.load(fp)
         self.assertIsNotNone(obj)
         self.assertEqual("benjamin", obj.name)
         self.assertEqual(21, obj.age)
 
     def test_dump_normal(self):
         text = r'{"name":"benjamin", "age":21}'
-        obj = objson.loads2(text)
+        obj = objson.loads(text)
         fp = StringIO()
         objson.dump(obj, fp)
         self.assertEqual(json.loads(text), json.loads(fp.getvalue()))
 
     def test_dump_normal2(self):
         text = r'[{"name":"benjamin", "age":21}]'
-        obj = objson.loads2(text)
+        obj = objson.loads(text)
         expected = objson.dumps(obj)
         self.assertEqual(json.loads(text), json.loads(expected))
 
@@ -199,7 +199,7 @@ class Dolphin2TestCase(unittest.TestCase):
 
     def test_dump_change_value(self):
         text = r'{"name":"benjamin", "age":21}'
-        obj = objson.loads2(text)
+        obj = objson.loads(text)
         obj.age = 30
         fp = StringIO()
         objson.dump(obj, fp)

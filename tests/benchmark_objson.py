@@ -101,7 +101,7 @@ def benchmark_json_set(text, times=1000000):
 def benchmark_objson_dumps(text, times=100000):
     obj = objson.loads(text)
     for _ in xrange(times):
-        objson.dumps2(obj)
+        objson.dumps(obj)
 
 
 @benchmark
@@ -126,14 +126,14 @@ if __name__ == '__main__':
            '"name9": "benjamin.c.yan", "name0": "benjamin.c.yan"}'
 
     benchmark_objson(text)
-    benchmark_objson2(text)
+    # benchmark_objson2(text)
     benchmark_json(text)
     benchmark_objson_get(text)
-    benchmark_objson2_get(text)
+    # benchmark_objson2_get(text)
     benchmark_json_get(text)
     benchmark_objson_set(text)
-    benchmark_objson2_set(text)
+    # benchmark_objson2_set(text)
     benchmark_json_set(text)
     benchmark_objson_dumps(text)
-    benchmark_objson2_dumps(text)
+    # benchmark_objson2_dumps(text)
     benchmark_json_dumps(text)

@@ -16,6 +16,10 @@ def object_hook(obj):
     return Dolphin(obj)
 
 
+def empty():
+    return Dolphin()
+
+
 class Dolphin(object):
     def __init__(self, other=None):
         if isinstance(other, Dolphin):
@@ -46,15 +50,13 @@ class Dolphin(object):
             elif '_' in name:
                 return self[_re_encode.sub('-', name)]
 
+    def __str__(self):
+        return '%s (%s)' % (self.__class__.__name__, repr(self))
 
-def __str__(self):
-    return '%s (%s)' % (self.__class__.__name__, repr(self))
-
-
-def __repr__(self):
-    keys = sorted(self.__dict__.keys())
-    text = ', '.join('%s=%r' % (key, self[key]) for key in keys)
-    return '{%s}' % text
+    def __repr__(self):
+        keys = sorted(self.__dict__.keys())
+        text = ', '.join('%s=%r' % (key, self[key]) for key in keys)
+        return '{%s}' % text
 
 
 def dumps(obj, *args, **kwargs):
