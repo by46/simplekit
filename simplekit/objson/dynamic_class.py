@@ -20,13 +20,15 @@ def _item_getter(key):
     return _getter
 
 
-def _dynamic__init(self, kv):
-    self._data = dict()
-    self._data.update(kv)
+def _dynamic__init(self, kv=None):
+    # self._data = dict()
+    if kv is None:
+        kv = dict()
+    self.__dict__.update(kv)
 
 
 def _dynamic__setitem(self, key, value):
-    self._data[key] = value
+    self.__dict__[key] = value
 
 
 def _property(name):
@@ -50,34 +52,39 @@ def make_dynamic_class(typename, field_names):
     template to define a dynamic class, instead of, I use the :func:`type` factory
     function.
 
-    Class prototype definition:
+    Class prototype definition ::
 
-    >>> class JsonObject(object):
-    >>> __identifier__ = "dolphin"
-    >>>
-    >>> __slots__ = ('name', 'age')
-    >>>
-    >>> _data = dict()
-    >>>
-    >>> def __init__(self, kv):
-    >>>     self._data.update(kv)
-    >>>
-    >>> def __getitem__(self, key):
-    >>>     return self._data.get(key)
-    >>>
-    >>> def __setitem__(self, key, value):
-    >>>     self._data[key] = value
-    >>>
-    >>> def __iter__(self):
-    >>>     return self._data.__iter__()
-    >>>
-    >>> def __repr__(self):
-    >>>    keys = sorted(self._data.keys())
-    >>>    text = ', '.join(["%s=%r" % (key, self[key]) for key in keys])
-    >>>    return '{%s}' % text
-    >>>
-    >>> name = property(_item_getter('name'), _item_setter('name'))
-    >>> age = property(_item_getter('age'), _item_setter('age'))
+        class JsonObject(object):
+            __identifier__ = "dolphin"
+
+            def __init__(self, kv=None):
+                if kv is None:
+                    kv = dict()
+                self.__dict__.update(kv)
+
+            def __getitem__(self, key):
+                return self.__dict__.get(key)
+
+            def __setitem__(self, key, value):
+                self.__dict__[key] = value
+
+            def __iter__(self):
+                return iter(self.__dict__)
+
+            def __repr__(self):
+                keys = sorted(self.__dict__.keys())
+                text = ', '.join(["%s=%r" % (key, self[key]) for key in keys])
+                return '{%s}' % text
+
+            name=_property('name')
+
+    Basic Usage ::
+
+        from objson import make_dynamic_class, dumps
+        Entity = make_dynamic_class('Entity', 'name, sex, age')
+        entity = Entity()
+        entity.name, entity.sex, entity.age = 'benjamin', 'male', 21
+        dumps(entity)
 
     :param typename: dynamic class's name
     :param field_names: a string :class:`list` and a field name string which separated by comma,
@@ -94,14 +101,13 @@ def make_dynamic_class(typename, field_names):
     attr = dict((safe_name, _property(name)) for name, safe_name in zip(field_names, safe_fields_names))
     attr['__doc__'] = typename
     attr['__identifier__'] = "dolphin"
-    attr['__slots__'] = tuple(['_data']+safe_fields_names)
     attr['__init__'] = _dynamic__init
-    attr['__getitem__'] = lambda self, key: self._data.get(key)
+    attr['__getitem__'] = lambda self, key: self.__dict__.get(key)
     attr['__setitem__'] = _dynamic__setitem
-    attr['__iter__'] = lambda self: iter(self._data)
+    attr['__iter__'] = lambda self: iter(self.__dict__)
     attr['__repr__'] = lambda self: "{%s}" % (', '.join([
                                                             "%s=%r" % (key, self[key]) for key in
-                                                            sorted(self._data.keys())
+                                                            sorted(self.__dict__.keys())
                                                             ]))
 
     return type(typename, (object,), attr)
