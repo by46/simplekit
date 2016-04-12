@@ -22,7 +22,7 @@ packages = [
     'simplekit.objson'
 ]
 
-requires = []
+requires = ['six', 'furl', 'requests', 'python-ntlm==1.1.0']
 
 version = ''
 with open('simplekit/__init__.py', 'r') as fd:
