@@ -6,7 +6,7 @@ CWD=$(shell pwd)
 .PHONY: test clean release
 
 release:
-	@python setup.py sdist upload
+	@python setup.py sdist upload -r dfispypi
 
 test:
 	@rm -vf .coverage coverage.xml
