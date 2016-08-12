@@ -1,2 +1,2 @@
-URL_EMAIL = 'http://localhost:8085/framework/v1/mail'
+URL_EMAIL = 'http://apis.newegg.org/framework/v1/mail'
 
