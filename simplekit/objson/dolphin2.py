@@ -1,37 +1,78 @@
-import json
-import itertools
 import functools
-
-from .dynamic_class import make_dynamic_class
+import json
+import re
+from keyword import iskeyword
 
 __author__ = 'benjamin.c.yan'
 
-_knapsack = {}
-
-seed = itertools.count(1)
+_re_encode = re.compile('[^a-zA-Z0-9]', re.MULTILINE)
 
 
 def object2dict(obj):
-    d = {}
-    for key in obj:
-        d[key] = obj[key]
-    return d
+    return obj.__dict__
 
 
 def object_hook(obj):
-    unique_id = tuple((key, type(obj[key])) for key in sorted(obj.keys()))
-    if unique_id in _knapsack:
-        dynamic_class = _knapsack[unique_id]
-    else:
-        dynamic_class = make_dynamic_class(_random_name(), obj.keys())
-        _knapsack[unique_id] = dynamic_class
-
-    obj = dynamic_class(obj)
-    return obj
+    return Dolphin(obj)
 
 
-def _random_name():
-    return 'Dolphin_%d' % next(seed)
+def empty(other=None):
+    """
+    new an empty object
+    basic usage ::
+    >>> from simplekit import objson
+    >>> obj = objson.empty()
+    >>> obj2 = objson.empty(dict(name='benjamin', sex='male'))
+    >>> assert obj2.name == 'benjamin'
+    >>> assert obj2.sex == 'male'
+
+    :param other: :class:``dict``, initialize properties
+    :return: an instance of :class:``Dolphin``
+    """
+    return Dolphin(other)
+
+
+class Dolphin(object):
+    def __init__(self, other=None):
+        if other:
+            if isinstance(other, Dolphin):
+                other = other.__dict__
+
+            self.__dict__.update(other)
+
+    def __iter__(self):
+        return iter(self.__dict__)
+
+    def __getitem__(self, key):
+        key = str(key)
+        if not key.startswith('_'):
+            return self.__dict__.get(key)
+
+    def __setitem__(self, key, value):
+        key = str(key)
+        if not key.startswith('_'):
+            self.__dict__[key] = value
+
+    def __getattr__(self, name):
+        name = str(name)
+        if not name.startswith('_'):
+            if name in self:
+                return self[name]
+            elif name.startswith('m') and (iskeyword(name[1:]) or len(name) > 1 and name[1].isdigit()):
+                return self[name[1:]]
+            elif '_' in name:
+                return self[_re_encode.sub('-', name)]
+
+    def __str__(self):
+        return '%s (%s)' % (self.__class__.__name__, repr(self))
+
+    def __repr__(self):
+        keys = sorted(self.__dict__.keys())
+        text = ', '.join('%s=%r' % (key, self[key]) for key in keys)
+        return '{%s}' % text
+
+    def __eq__(self, other):
+        return str(self) == str(other)
 
 
 def dumps(obj, *args, **kwargs):

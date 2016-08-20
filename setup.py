@@ -1,17 +1,13 @@
-#!/usr/bin/env python
-
-__author__ = "benjamin.c.yan"
-
+import io
 import os
 import re
 import sys
-
 from codecs import open
+from distutils.text_file import TextFile
 
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+from setuptools import find_packages, setup
+
+__author__ = "benjamin.c.yan"
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
@@ -22,29 +18,51 @@ packages = [
     'simplekit.objson'
 ]
 
-requires = []
+requires = ['six', 'furl', 'requests', 'python-ntlm==1.1.0']
 
-version = ''
-with open('simplekit/__init__.py', 'r') as fd:
-    version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
-                        fd.read(), re.MULTILINE).group(1)
+home = os.path.abspath(os.path.dirname(__file__))
+missing = object()
 
-if not version:
-    raise RuntimeError('Cannot find version information')
+
+def read_description(*files, **kwargs):
+    encoding = kwargs.get('encoding', 'utf-8')
+    sep = kwargs.get('sep', '\n')
+    buf = [io.open(name, encoding=encoding).read() for name in files]
+    return sep.join(buf)
+
+
+def read_dependencies(requirements=missing):
+    if requirements is None:
+        return []
+    if requirements is missing:
+        requirements = 'requirements.txt'
+    if not os.path.isfile(requirements):
+        return []
+    text = TextFile(requirements, lstrip_ws=True)
+    try:
+        return text.readlines()
+    finally:
+        text.close()
+
+
+def read_version(version_file):
+    with open(version_file, 'rb') as fd:
+        result = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
+                           fd.read(), re.MULTILINE)
+        return result.group(1) if result else '0.0.1'
+
 
 setup(
     name='simplekit',
-    version=version,
+    version=read_version('simplekit/__init__.py'),
     description='A simple and brief utility tools framework',
-    long_description="A simple and brief utility tools framework",
+    long_description=read_description('README.md'),
     author='Benjamin Yan',
     author_email='ycs_ctbu_2010@126.com',
     url='https://github.com/by46/simplekit',
-    packages=packages,
-    package_data={'': ['LICENSE', 'NOTICE']},
-    package_dir={'simplekit': 'simplekit'},
+    packages=find_packages(),
     include_package_data=True,
-    install_requires=requires,
+    install_requires=read_dependencies(),
     license='The MIT License',
     zip_safe=False,
     classifiers=(
