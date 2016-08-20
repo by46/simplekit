@@ -82,7 +82,8 @@ def send_email_inner(sender, to, subject, body, cc=None, bcc=None, priority=PRIO
                 MailType=mail_type,
                 SmtpSetting=smtp_setting,
                 LondonIISetting=london_2_setting)
-    response = requests.post(settings.URL_EMAIL, json=body, headers={'Content-Type': 'Application/json'})
+    response = requests.post(settings.URL_EMAIL, json=body,
+                             headers={'Content-Type': 'Application/json', 'accept': 'application/json'})
     if response.status_code != httplib.OK:
         del body['SmtpSetting']
         raise MailException("Send mail use api {0} status code: {1}\n body : {2}\n response content : {3}".format(
@@ -99,7 +100,7 @@ def send_email(sender, to, subject, body, cc=None, bcc=None, priority=PRIORITY_N
             if isinstance(item, six.string_types):
                 filename = os.path.basename(item)
                 file_content = open(item, 'rb').read()
-                file_content = base64.encodestring(file_content).strip('\n')
+                file_content = base64.encodestring(file_content).replace('\n', '')
                 media_type = MEDIA_TYPE_OTHER
                 attachment = MailAttachment(filename, file_content, media_type)
                 attachments.append(attachment)
