@@ -100,7 +100,7 @@ def send_email(sender, to, subject, body, cc=None, bcc=None, priority=PRIORITY_N
             if isinstance(item, six.string_types):
                 filename = os.path.basename(item)
                 file_content = open(item, 'rb').read()
-                file_content = base64.encodestring(file_content).replace('\n', '')
+                file_content = base64.b64encode(file_content)
                 media_type = MEDIA_TYPE_OTHER
                 attachment = MailAttachment(filename, file_content, media_type)
                 attachments.append(attachment)
