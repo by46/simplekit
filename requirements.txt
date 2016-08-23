@@ -1,3 +1,4 @@
 six
 orderedmultidict
 requests
+furl
