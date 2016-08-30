@@ -1,3 +1,4 @@
-six==1.10.0
+six
 orderedmultidict
 requests
+furl

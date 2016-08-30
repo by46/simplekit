@@ -3,3 +3,4 @@ six
 orderedmultidict
 nose
 requests
+furl

@@ -24,6 +24,7 @@ This part of document is introduce what's is SimpleKit and who to use it.
    install
    objson
    config
+   docker
    api
 
 
