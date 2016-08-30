@@ -71,6 +71,8 @@ class MailTemplateVariable(dict):
 def send_email_inner(sender, to, subject, body, cc=None, bcc=None, priority=PRIORITY_NORMAL,
                      content_type=CONTENT_TYPE_TEXT,
                      mail_type=None, smtp_setting=None, london_2_setting=None):
+    if isinstance(to, (list, tuple)):
+        to = ';'.join(to)
     body = dict(From=sender,
                 To=to,
                 CC=cc,
