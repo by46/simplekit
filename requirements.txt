@@ -2,3 +2,5 @@ six
 orderedmultidict
 requests
 furl
+httpretty
+mock

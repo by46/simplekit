@@ -199,7 +199,7 @@ class Docker(object):
             return False
 
         if old_image_name.lower() != name.lower():
-            self.logger.error("You image %s must be same with container's Image.", image_name, container.image)
+            self.logger.error("You image %s must be same with container's Image %s.", image_name, container.image)
             return False
 
         code, result = self.update(container_name, tag=version)

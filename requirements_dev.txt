@@ -4,3 +4,4 @@ orderedmultidict
 nose
 requests
 furl
+mock
