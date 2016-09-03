@@ -4,7 +4,6 @@ import unittest
 
 import httpretty
 from mock import MagicMock
-from mock import patch
 
 from simplekit import objson
 from simplekit.docker import Docker
@@ -158,5 +157,3 @@ class DockerTests(unittest.TestCase):
         httpretty.register_uri(httpretty.PUT, change_url, status=httplib.OK)
         httpretty.register_uri(httpretty.DELETE, url, status=httplib.OK)
         self.assertTrue(client.delete_container_2(name))
-
-

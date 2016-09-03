@@ -1,22 +1,30 @@
 # coding=utf-8
+""" docker api sdk
+
+"""
+import functools
 import httplib
+import itertools
 import logging
 
 import requests
-from simplekit import objson
 
-import utils
-from utils import request
+from simplekit import objson
 from simplekit.exceptions import ContainerNotFound
 from simplekit.exceptions import GeneralError
 from simplekit.exceptions import ImageConflict
 from simplekit.exceptions import ImageNotFound
+from . import utils
 from .repository import repo
+from .utils import request
 
 __author__ = 'benjamin.c.yan'
 
-__all__ = ["Docker"]
 DOCKER_NEG = "docker.neg"
+
+
+def name_start_with(name, container):
+    return any([True for x in container.Names if x.startswith(name)])
 
 
 class Docker(object):
@@ -82,8 +90,10 @@ class Docker(object):
         :param image:
         :param hostname:
         :param networkmode: `class`:`str`, host | bridge
-        :param ports: `class`:`list`, [{'type':'tcp', 'publicport':8080, 'privateport':80, 'ip':'0.0.0.0}]
-        :param volumes: `class`:`list`, [{"containervolume":"/app-conf", "hostvolume":"/opt/app/app-conf"}]
+        :param ports: `class`:`list`,
+            [{'type':'tcp', 'publicport':8080, 'privateport':80, 'ip':'0.0.0.0}]
+        :param volumes: `class`:`list`,
+            [{"containervolume":"/app-conf", "hostvolume":"/opt/app/app-conf"}]
         :param env: `class`:`list`, ["var=value", "var1=value1"]
         :param restartpolicy: `class`:`str`, always | on-failure | no(default)
         :param restartretrycount: 仅当 restartpolicy 是 on-failure 时才有用
@@ -91,7 +101,7 @@ class Docker(object):
         :return:
         """
         restartpolicy = restartpolicy.lower()
-        repository, image_name, version = utils.parse_image_name(image)
+        _, image_name, version = utils.parse_image_name(image)
         image = '{0}/{1}:{2}'.format(DOCKER_NEG, image_name, version)
         body = dict(name=name, image=image, hostname=hostname, networkmode=networkmode,
                     ports=ports or [],
@@ -134,8 +144,7 @@ class Docker(object):
         if code != httplib.OK:
             return []
 
-        return [container for container in containers if
-                any(map(lambda x: x.startswith(name), container.Names))]
+        return list(itertools.ifilter(functools.partial(name_start_with, name), containers))
 
     def get_containers_count(self, name):
         return len(self.get_containers_by_name(name))
@@ -172,7 +181,7 @@ class Docker(object):
 
         code, containers = self.get_containers(list_all=search_all)
         if code == httplib.OK:
-            containers = filter(lambda container: name in container.Names[0].lower(), containers)
+            containers = [x for x in containers if name in x.Names[0].lower()]
         return code, containers
 
     def update_image(self, container_name, image_name):
@@ -184,27 +193,32 @@ class Docker(object):
         """
         code, container = self.get_container(container_name)
         if code != httplib.OK:
-            self.logger.error("Container %s is not exists. error code %s, error message %s", container_name, code,
+            self.logger.error("Container %s is not exists"
+                              ". error code %s, error message %s", container_name, code,
                               container)
             return False
 
         _, old_image_name, _ = utils.parse_image_name(container.image)
         repository, name, version = utils.parse_image_name(image_name)
         if not repository or repository.lower() != DOCKER_NEG:
-            self.logger.error("You image %s must have a 'docker.neg/' prefix string", image_name)
+            self.logger.error("You image %s must have"
+                              "a 'docker.neg/' prefix string", image_name)
             return False
 
         if not repo.image_exists(name, tag=version):
-            self.logger.error("You image %s must be location in docker.neg repository.", image_name)
+            self.logger.error("You image %s must be location "
+                              "in docker.neg repository.", image_name)
             return False
 
         if old_image_name.lower() != name.lower():
-            self.logger.error("You image %s must be same with container's Image %s.", image_name, container.image)
+            self.logger.error("You image %s must be same "
+                              "with container's Image %s.", image_name, container.image)
             return False
 
         code, result = self.update(container_name, tag=version)
         if code != httplib.OK:
-            self.logger.error("Update container %s with image failure, code %s, result %s", container_name, code,
+            self.logger.error("Update container %s with image "
+                              "failure, code %s, result %s", container_name, code,
                               result)
             return False
 
