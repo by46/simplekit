@@ -24,8 +24,8 @@ class DockerTests(unittest.TestCase):
         self.base = 'http://mock:8500'
         self.server = 'mock'
 
-    @patch('simplekit.docker.docker.request')
-    def test_get_container(self, request):
+    @httpretty.activate
+    def test_get_container(self):
         name = 'creb_session_1'
         url = '{base}/dockerapi/v2/containers/{name}'.format(base=self.base, name=name)
         body = dict()
