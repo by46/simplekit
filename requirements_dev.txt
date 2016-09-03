@@ -5,3 +5,4 @@ nose
 requests
 furl
 mock
+httpretty
