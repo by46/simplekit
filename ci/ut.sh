@@ -1,7 +1,8 @@
 #! /bin/sh
 
-COVER=coverage
+COVER=./venv/bin/coverage
 
+./venv/bin/activate
 ${COVER} run --source simplekit -m unittest discover --start-directory test --pattern test_*.py
 
 [ $? -gt 0 ] && exit 1
