@@ -1,7 +1,6 @@
 coverage
 six
 orderedmultidict
-nose
 requests
 furl
 mock
