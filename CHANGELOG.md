@@ -1,8 +1,12 @@
 # Change log
 
-## [Unrelease]
+## [0.0.6]
 ### Added
-- send email
+- Send email
+- Add Docker sdk
+
+### Changed
+- Add more unittest
 
 ## 0.0.5
 ### Changed
