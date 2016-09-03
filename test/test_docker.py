@@ -3,13 +3,11 @@ import json
 import unittest
 
 import httpretty
-import requests
 from mock import MagicMock
-from mock import call
+from mock import patch
 
 from simplekit import objson
-from simplekit.docker import Docker, factory, docker
-from simplekit.docker.rest import send_rest
+from simplekit.docker import Docker
 
 __author__ = 'benjamin.c.yan'
 
@@ -26,8 +24,8 @@ class DockerTests(unittest.TestCase):
         self.base = 'http://mock:8500'
         self.server = 'mock'
 
-    @httpretty.activate
-    def test_get_container(self):
+    @patch('simplekit.docker.docker.request')
+    def test_get_container(self, request):
         name = 'creb_session_1'
         url = '{base}/dockerapi/v2/containers/{name}'.format(base=self.base, name=name)
         body = dict()
@@ -162,31 +160,3 @@ class DockerTests(unittest.TestCase):
         self.assertTrue(client.delete_container_2(name))
 
 
-class DockerFactoryTest(unittest.TestCase):
-    def setUp(self):
-        self._old = docker.Docker
-
-    def tearDown(self):
-        docker.Docker = self._old
-
-    def test_get(self):
-        dock_mock = docker.Docker = MagicMock(return_value=object())
-        factory.get('mock')
-        dock_mock.assert_called_with('mock')
-
-        factory.get('mock')
-        dock_mock.assert_has_calls([call('mock')])
-
-        factory.get('mock2')
-        dock_mock.assert_has_calls([call('mock'), call('mock2')])
-
-
-class RestTest(unittest.TestCase):
-    @httpretty.activate
-    def test_send_rest(self):
-        session = MagicMock()
-        session.request = MagicMock()
-        session.request.side_effect = requests.Timeout()
-        code, _ = send_rest('http://mock1:8080', session=session)
-        self.assertEqual(httplib.SERVICE_UNAVAILABLE, code)
-        pass
