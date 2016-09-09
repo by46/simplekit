@@ -1,5 +1,9 @@
 # Change log
 
+## [0.0.7]
+### Added
+- Add originaldata query parameter for get container
+
 ## [0.0.6]
 ### Added
 - Send email

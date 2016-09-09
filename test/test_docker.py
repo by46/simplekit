@@ -4,6 +4,7 @@ import unittest
 
 import httpretty
 from mock import MagicMock
+from mock import patch
 
 from simplekit import objson
 from simplekit.docker import Docker
@@ -34,6 +35,18 @@ class DockerTests(unittest.TestCase):
         code, container = client.get_container(name)
         self.assertEqual(httplib.OK, code)
         self.assertDictEqual(body, json.loads(objson.dumps(container)))
+
+    @patch('simplekit.docker.utils.send_rest')
+    def test_get_container_2(self, send_rest):
+        send_rest.return_value = (httplib.OK, None)
+        client = Docker('mock')
+        status_code, container = client.get_container('stub_container_name', return_original_data=True)
+        self.assertEqual(httplib.OK, status_code)
+        send_rest.assert_called_with('http://mock:8500/dockerapi/v2/containers/stub_container_name?originaldata=True',
+                                     body=None,
+                                     headers={},
+                                     method='GET',
+                                     session=client.session)
 
     @httpretty.activate
     def test_get_containers(self):

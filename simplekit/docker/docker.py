@@ -67,8 +67,8 @@ class Docker(object):
         return ("/dockerapi/v2/containers", dict(all=list_all)), None
 
     @request(method='get')
-    def get_container(self, name):
-        return "/dockerapi/v2/containers/" + name, None
+    def get_container(self, name, return_original_data=False):
+        return ("/dockerapi/v2/containers/" + name, dict(originaldata=return_original_data)), None
 
     @request(method='post')
     def pull_image(self, name, tag='latest'):
