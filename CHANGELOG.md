@@ -1,5 +1,9 @@
 # Change log
 
+## [0.0.8]
+### Added
+- supported for python 3+
+
 ## [0.0.7]
 ### Added
 - Add originaldata query parameter for get container
