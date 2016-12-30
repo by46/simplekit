@@ -7,8 +7,6 @@ from distutils.text_file import TextFile
 
 from setuptools import find_packages, setup
 
-from simplekit import __version__
-
 __author__ = "benjamin.c.yan"
 
 if sys.argv[-1] == 'publish':
@@ -46,9 +44,18 @@ def read_dependencies(requirements=missing):
     finally:
         text.close()
 
+
+def read_version(version_file):
+    version_file = os.path.join(version_file, '__init__.py')
+    with open(version_file, 'rb') as fd:
+        result = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
+                           fd.read(), re.MULTILINE)
+        return result.group(1) if result else '0.0.1'
+
+
 setup(
     name='simplekit',
-    version=__version__,
+    version=read_version('simplekit'),
     description='A simple and brief utility tools framework',
     long_description=read_description('README.md'),
     author='Benjamin Yan',
