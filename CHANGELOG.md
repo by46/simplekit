@@ -1,5 +1,10 @@
 # Change log
 
+## [0.0.9]
+### Added
+- add size_format
+- add unittest for size_format
+
 ## [0.0.8]
 ### Added
 - supported for python 3+
