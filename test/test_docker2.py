@@ -159,6 +159,6 @@ class Docker2Tests(unittest.TestCase):
         # Assertion
         self.assertTrue(client.update_image_2(container_name, image_name))
         get_container.assert_called_with(container_name)
-        repo.image_exists.assert_called_with('demo', tag='latest')
-        pull_image.assert_called_with('demo', 'latest')
+        repo.image_exists.assert_called_with('docker.neg1/demo', tag='latest')
+        pull_image.assert_called_with('docker.neg1/demo', 'latest')
         update.assert_called_with(container_name, tag='latest')
