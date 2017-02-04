@@ -55,7 +55,7 @@ def parse_image_name(name):
     """
     name = name or ""
     if '/' in name:
-        repository, other = name.split('/')
+        repository, other = name.split('/', 1)
         if not is_docker_hub(repository):
             repository, other = None, name
     else:
