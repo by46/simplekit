@@ -1,5 +1,9 @@
 # Change log
 
+## [0.0.10]
+### Fixed
+- support multi-slash for image
+
 ## [0.0.9]
 ### Added
 - add size_format

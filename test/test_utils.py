@@ -28,3 +28,15 @@ class UitlsTest(unittest.TestCase):
         self.assertEqual('docker.io', repo)
         self.assertEqual('demo', name)
         self.assertEqual('0.0.1', tag)
+
+        image_name = "docker.io/dfis/demo:0.0.1"
+        repo, name, tag = utils.parse_image_name(image_name)
+        self.assertEqual('docker.io', repo)
+        self.assertEqual('dfis/demo', name)
+        self.assertEqual('0.0.1', tag)
+
+        image_name = "dfis/demo:0.0.1"
+        repo, name, tag = utils.parse_image_name(image_name)
+        self.assertIsNone(repo)
+        self.assertEqual('dfis/demo', name)
+        self.assertEqual('0.0.1', tag)

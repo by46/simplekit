@@ -5,5 +5,5 @@ from .exceptions import ImageNotFound
 from .exceptions import MailException
 from .exceptions import SimpleKitError
 
-__version__ = "0.0.9"
+__version__ = "0.0.10"
 __author__ = 'benjamin.c.yan'

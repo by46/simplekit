@@ -6,6 +6,7 @@ from furl import furl
 from .rest import send_rest
 
 __author__ = 'benjamin.c.yan'
+SUFFIX = ['.com', '.neg', '.io']
 
 
 def request(method='GET'):
@@ -55,6 +56,8 @@ def parse_image_name(name):
     name = name or ""
     if '/' in name:
         repository, other = name.split('/')
+        if not is_docker_hub(repository):
+            repository, other = None, name
     else:
         repository, other = None, name
 
@@ -64,3 +67,8 @@ def parse_image_name(name):
         name, version = other, 'latest'
 
     return repository, name, version
+
+
+def is_docker_hub(repository):
+    repository = repository.lower()
+    return any([repository.endswith(suffix) for suffix in SUFFIX])
