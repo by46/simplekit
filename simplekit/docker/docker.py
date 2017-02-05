@@ -33,7 +33,7 @@ class Docker(object):
     LoggerName = 'Docker'
 
     def __init__(self, server, port=8500):
-        self.logger = logging.getLogger('negowl')
+        self.logger = logging.getLogger(__name__)
         self._session = requests.session()
         self._host = server
         self._port = port
@@ -83,7 +83,7 @@ class Docker(object):
 
     @request(method='post')
     def create_container(self, name, image, hostname='dfis', networkmode='bridge', ports=None, volumes=None, env=None,
-                         restartpolicy='no', restartretrycount='2', command=""):
+                         restartpolicy='always', restartretrycount='2', command=""):
         """testing
 
         :param name:

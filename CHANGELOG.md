@@ -1,5 +1,9 @@
 # Change log
 
+## [0.0.11]
+### Fixed
+- use always for restartpolicy options for create container
+
 ## [0.0.10]
 ### Fixed
 - support multi-slash for image
