@@ -1,6 +1,8 @@
 # Change log
 
 ## [0.0.11]
+### Added
+- add percent function for simplekit.common
 ### Fixed
 - use always for restartpolicy options for create container
 - change common sizeof fmt
