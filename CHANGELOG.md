@@ -3,6 +3,7 @@
 ## [0.0.11]
 ### Fixed
 - use always for restartpolicy options for create container
+- change common sizeof fmt
 
 ## [0.0.10]
 ### Fixed

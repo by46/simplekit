@@ -4,6 +4,6 @@ def sizeof_fmt(num):
         if num < 1024.0:
             if not unit:
                 return str(num)
-            return "%3.1f%s" % (num, unit)
+            return "%3.1f %s" % (num, unit)
         num /= 1024.0
-    return "%.1f%s" % (num, 'Y')
+    return "%.1f %s" % (num, 'Y')
