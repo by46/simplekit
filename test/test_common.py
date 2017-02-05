@@ -11,10 +11,10 @@ class FsTestCase(unittest.TestCase):
         self.assertEqual(actual, expect)
 
         size = 1024
-        expect = '1.0K'
+        expect = '1.0 K'
         actual = sizeof_fmt(size)
         self.assertEqual(actual, expect)
 
         size = 1024 * 1024 + 1
-        expect = '1.0M'
+        expect = '1.0 M'
         self.assertEqual(sizeof_fmt(size), expect)
