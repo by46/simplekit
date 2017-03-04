@@ -82,8 +82,8 @@ def dumps(obj, *args, **kwargs):
 
     >>> import simplekit.objson
     >>> obj = {'name':'wendy'}
-    >>> print simplekit.objson.dumps(obj)
-
+    >>> simplekit.objson.dumps(obj)
+    '{"name": "wendy"}'
 
     :param obj: a object which need to dump
     :param args: Optional arguments that :func:`json.dumps` takes.
@@ -105,7 +105,8 @@ def dump(obj, fp, *args, **kwargs):
     >>> obj = {'name': 'wendy'}
     >>> io = StringIO()
     >>> simplekit.objson.dump(obj, io)
-    >>> print io.getvalue()
+    >>> io.getvalue()
+    '{"name": "wendy"}'
 
     :param obj: a object which need to dump
     :param fp: a instance of file object
@@ -130,8 +131,8 @@ def _load(fn):
 
         >>> from simplekit import objson
         >>> text = r'{"Name":"wendy"}'
-        >>> obj = objson.loads(text)
-        >>> assert obj.Name == 'wendy'
+        >>> objson.loads(text)
+        {"name": "wendy"}
 
         :param src: string or file object
         :param args: Optional arguments that :func:`json.load` takes.
@@ -149,3 +150,8 @@ def _load(fn):
 
 load = _load(json.load)
 loads = _load(json.loads)
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
